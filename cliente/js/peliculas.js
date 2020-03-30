@@ -148,8 +148,4 @@ function ControladorPeliculas() {
             });
         }
 
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 3d83919df074812cdf9c6ca8f5aefb05d3ea19ff
