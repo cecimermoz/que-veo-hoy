@@ -82,5 +82,8 @@ function getGeneros (req, res) {
 
 
 module.exports = { getPeliculas, getGeneros };
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 3d83919df074812cdf9c6ca8f5aefb05d3ea19ff

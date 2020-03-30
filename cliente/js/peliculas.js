@@ -10,7 +10,11 @@ $(document).ready(function() {
                 //a esa opcion se le asigna como valor el id del genero, dato que luego va a servir para filtrar por id de genero.
                 opcion.attr("value", (data.generos)[i].id);
                 //se le pone el nombre del genero al texto de la opcion
+<<<<<<< HEAD
                 opcion.html((data.generos)[i].nombre);
+=======
+                opcion.html(data.generos[i].nombre_genero);
+>>>>>>> 3d83919df074812cdf9c6ca8f5aefb05d3ea19ff
                 //se agrega la opcion a la lista de seleccion
                 $(".genero-select").append(opcion);
             }
@@ -148,4 +152,8 @@ function ControladorPeliculas() {
             });
         }
 
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 3d83919df074812cdf9c6ca8f5aefb05d3ea19ff
