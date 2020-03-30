@@ -1,86 +1,86 @@
 var conexion = require('../lib/conexionbd');
 
 function getPeliculas (req, res) {
-    let anio = req.query.anio;
-    let genero = req.query.genero;
-    let titulo = req.query.titulo;
-    let orden = req.query.columna_orden;
-    let tipo = req.query.tipo_orden;
-    let cantidad = req.query.cantidad;
-    let pagina = req.query.pagina;
-    let sql = 'SELECT * FROM pelicula';
-    let countSql = 'SELECT count(*) as total FROM pelicula';
-    let parametros = [];
-    if (anio && genero && titulo) {
-        sql += ' WHERE genero_id = ? AND anio = ? AND titulo LIKE ? ';
-        countSql += ' WHERE genero_id = ? AND anio = ? AND titulo LIKE ? ';
-        parametros = [parseInt(genero), parseInt(anio), '%' + titulo + '%'];
-    } else if (anio && genero) {
-        sql += ' WHERE anio = ? AND genero_id = ?';
-        countSql += ' WHERE anio = ? AND genero_id = ?';
-        parametros = [parseInt(anio), parseInt(genero)];
-    } else if (anio && titulo) {
-        sql += ' WHERE anio = ? AND titulo LIKE ?';
-        countSql += ' WHERE anio = ? AND titulo LIKE ?';
-        parametros = [parseInt(anio), '%' + titulo + '%'];
-    } else if (genero && titulo) {
-        sql += ' WHERE genero_id = ? AND titulo LIKE ?';
-        countSql += ' WHERE genero_id = ? AND titulo LIKE ?';
-        parametros = [parseInt(genero), '%' + titulo + '%'];
-    } else if (anio) {
-        sql += ' WHERE anio = ?';
-        countSql += ' WHERE anio = ?';
-        parametros = [parseInt(anio)];
-    } else if (genero) {
-        sql += ' WHERE genero_id = ?';
-        countSql += ' WHERE genero_id = ?';
-        parametros = [parseInt(genero)];
-    } else if (titulo) {
-        sql += " WHERE titulo LIKE ?";
-        countSql += " WHERE titulo LIKE ?";
-        parametros = ['%' + titulo + '%'];
-    }
-    if (orden && tipo) {
-        sql += ' ORDER BY ' + orden + ' ' + tipo;
-    }
-    if (cantidad && parseInt(pagina) >= 1) {
-        let offset = (parseInt(pagina) - 1) * parseInt(cantidad);
-        sql += ' LIMIT ? OFFSET ? ';
-        parametros.push(parseInt(cantidad));
-        parametros.push(offset);
-    }
-    console.log(sql);
-    console.log(countSql);
-    console.log(parametros);
-    conexion.query(
-        sql,
-        parametros,
-        (error, results, fields) => {
-        if (error) console.error(error);
-        conexion.query(
-            countSql,
-            parametros,
-            (error, resultsCount, fields) => {
-            if (error) console.error(error);
-            res.json({ peliculas: results, total: resultsCount[0].total });
-            }
-        );
-        }
-    )
+
 }
 
 function getGeneros (req, res) {
+    res.json({
+        "generos": [
+          {
+            "id": 1,
+            "nombre_genero": "Action"
+          },
+          {
+            "id": 2,
+            "nombre_genero": "Adventure"
+          },
+          {
+            "id": 3,
+            "nombre_genero": "Animation"
+          },
+          {
+            "id": 4,
+            "nombre_genero": "Biography"
+          },
+          {
+            "id": 5,
+            "nombre_genero": "Comedy"
+          },
+          {
+            "id": 6,
+            "nombre_genero": "Crime"
+          },
+          {
+            "id": 7,
+            "nombre_genero": "Documentary"
+          },
+          {
+            "id": 8,
+            "nombre_genero": "Drama"
+          },
+          {
+            "id": 9,
+            "nombre_genero": "Family"
+          },
+          {
+            "id": 10,
+            "nombre_genero": "Horror"
+          },
+          {
+            "id": 11,
+            "nombre_genero": "Mystery"
+          },
+          {
+            "id": 12,
+            "nombre_genero": "Romance"
+          },
+          {
+            "id": 13,
+            "nombre_genero": "Sci-Fi"
+          },
+          {
+            "id": 14,
+            "nombre_genero": "Short"
+          },
+          {
+            "id": 15,
+            "nombre_genero": "Thriller"
+          }
+        ]
+      }
+      )
+    /*
     conexion.query('SELECT * from genero2', (error, results, fields) => {
         if(error){
             res.send(404);
         } else {
-            res.json( { generos:results } ) /* Genera por cada resultado, una posición de array en formato de objeto */
+            res.json( { generos:results } ) 
         }
     });
+    */
 }
 
 
 
 module.exports = { getPeliculas, getGeneros };
-
-
