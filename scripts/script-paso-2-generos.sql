@@ -1,4 +1,4 @@
-INSERT INTO `genero` (`id`, `nombre`)
+INSERT INTO genero (id, nombre)
 VALUES
 	(1,'Action'),
 	(2,'Adventure'),
