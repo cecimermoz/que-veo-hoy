@@ -79,11 +79,58 @@ function getGeneros (req, res) {
     });
 }
 
+function getPelicula (req, res) {
+    let idPelicula = req.params.idpelicula;
+    conexion.query("SELECT * from pelicula WHERE id = ?",
+    [idPelicula], (error, peliculas, fields) => {
+        if(error){
+            res.send(404);
+            console.log("Error en Id Pelicula");
+        } 
+        if(peliculas.length > 0){
+            let pelicula = peliculas[0];
+            let generoId = pelicula.genero_id;
+
+             conexion.query("SELECT * from genero2 WHERE id = ?",
+            [generoId], (error, generos, fields) => {
+                if(error){
+                    res.send(404);
+                    console.log("Error en Genero Pelicula");
+                }
+                let genero = generos[0];
+ 
+                 conexion.query("SELECT a.* FROM actor_pelicula ap JOIN actor a ON a.id = ap.actor_id WHERE ap.pelicula_id = ?", 
+                [idPelicula], (error , actores, fields) => {
+                    if(error){
+                        res.send(404);
+                        console.log("Error en el actor_pelicula");
+                    } 
+                    res.json ({ 
+                        pelicula: pelicula, 
+                        actores: actores,
+                        genero: genero 
+                    
+                  });
+                 }
+              );
+            }
+          );          
+        } else {
+            res.status(404).send();
+        }
+    }
+  );
+}
+/* 
+function getRecomendacion (req, res) {
+    let genero = req.query.genero;
+    let anio_inicio = req.query.anio_inicio;
+    let anio_fin = req.query.anio_fin;
+    let puntuacion = req.query.puntuacion;
+    
+}
+
+ */
+module.exports = { getPeliculas, getGeneros, getPelicula, getRecomendacion};
 
 
-module.exports = { getPeliculas, getGeneros };
-<<<<<<< HEAD
-
-
-=======
->>>>>>> 3d83919df074812cdf9c6ca8f5aefb05d3ea19ff
